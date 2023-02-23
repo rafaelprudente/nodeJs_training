@@ -3,18 +3,16 @@ const application = express();
 const serverPort = 8181;
 
 application.set('view engine', 'ejs');
+application.use(express.static('public'));
 
-application.get("/:name/:lang", (request, response) => {
-    let nome = request.params.name;
-    let ling = request.params.lang;
-    let showMsg = false;
-    response.render('index',{
-        name: nome,
-        lang: ling,
-        company: 'RR Consulters',
-        subscribers: 8000,
-        error: showMsg
-    });
+application.get("/", (request, response) => {
+    response.render('index');
+});
+application.get("/ask", (request, response) => {
+    response.render('ask');
+});
+application.post("/savequestion", (request, response) => {
+    response.send("received");
 });
 
 application.listen(serverPort, function (error) {
